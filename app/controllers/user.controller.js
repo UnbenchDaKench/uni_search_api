@@ -1,16 +1,16 @@
 const bcrypt = require("bcrypt")
-
-const User = require('../models/model')
+const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
-
+const mongoose = require('mongoose')
 
 exports.login = (req, res) => {
-    User.find({ email: req.body.email })
+    User.find({email: req.body.email })
         .exec()
         .then(user => {
+            console.log(user)
             if (user.length < 1) {
                 return res.status(401).json({
-                    message: "Auth failed"
+                    message: "Auth faileds"
                 })
             }
             bcrypt.compare(req.body.password, user[0].password, (err, hash) => {
@@ -30,7 +30,10 @@ exports.login = (req, res) => {
                 )
                 return res.status(200).json({
                     message: "Auth successful",
-                    token: token
+                    token: token,
+                    username: user[0].username,
+                    nationality: user[0].nationality,
+                    userId: user[0]._id
                 })
             }
                 else {
@@ -69,7 +72,8 @@ exports.signup = (req, res) => {
 
                             email: req.body.email,
                             username: req.body.username,
-                            password: hash
+                            password: hash,
+                            nationality: req.body.nationality
                         })
                         user.save().then(data => {
                             res.send(data);
