@@ -12,6 +12,8 @@ module.exports = (app) => {
 
     app.post('/collection/:userId', collection.create)
 
+    app.get('/collection/:userId', collection.find)
+
 
 
 }

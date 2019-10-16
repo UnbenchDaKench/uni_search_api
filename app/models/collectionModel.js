@@ -5,21 +5,24 @@ const schoolSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    website: {
-        type: String,
+    web_pages: {
+        type: Array,
         required: true
     },
     country: {
         type: String,
         required: true
     },
-    flag: {
+    domains: {
+        type: Array,
+        // required: true
+    },
+    flags: {
         type: String,
         required: true
     },
     state: {
         type: String,
-        required: true
     }
 })
 
