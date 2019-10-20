@@ -3,6 +3,7 @@ const User = require('../models/userModel')
 const mongoose = require('mongoose')
 
 exports.create = (req, res) => {
+    console.log(req.body)
     var userId = req.params.userId
     User.findById(userId)
         .then(user => {
@@ -15,13 +16,13 @@ exports.create = (req, res) => {
 
 
                 Collection.findById(userId)
-                    .exec()
+                    // .exec()
                     .then(choice => {
                         if (choice == null) {
                             const collection = new Collection({
                                 schoolChoices: req.body,
                                 _id: req.params.userId,
-                                mainId: mongoose.Schema.Types.ObjectId()
+                                // mainId: mongoose.Schema.Types.ObjectId()
                             })
                             collection.save().then(data => {
                                 res.send(data)
@@ -81,6 +82,27 @@ exports.find = (req, res) => {
         }
         return res.status(500).send({
             message: "Error retrieving user with id" + req.params.userId
+        })
+    })
+}
+exports.deleteOne = (req, res) => {
+    Collection.update({ '_id': req.params.userId },
+
+        { $pull: { "schoolChoices": { _id: req.params.collectionId } } },
+
+    ).then(collection => {
+        if (!collection) {
+            return res.status(404).send({
+                message: "School not found wit id" + req.params.collectionId
+            })
+        }
+        res.send({ message: "Deleted Succesfully" })
+    },
+        false,
+        true
+    ).catch(error => {
+        return res.status(404).send({
+            message: error.message
         })
     })
 }

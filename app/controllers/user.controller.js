@@ -103,7 +103,9 @@ exports.findAll = (req, res) => {
 }
 
 exports.findOne = (req, res) => {
-    User.findById(req.params.userId).then(user => {
+    console.log(req.params.userId)
+    User.findByIdAndUpdate(req.params.userId, req.body, {new: true}).
+    then(user => {
         if (!user) {
             return res.status(404).send({
                 message: "user not found" + req.params.userId
@@ -121,6 +123,12 @@ exports.findOne = (req, res) => {
         })
     })
 
+}
+
+exports.deleteOne = (req, res) => {
+    User.findByIdAndRemove(req.params.userId).then(res => {
+        console.log(res)
+    })
 }
 
 

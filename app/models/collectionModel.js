@@ -15,15 +15,18 @@ const schoolSchema = mongoose.Schema({
     },
     domains: {
         type: Array,
-        // required: true
+        required: true
     },
     flags: {
         type: String,
         required: true
     },
-    state: {
-        type: String,
-    }
+    
+    isvisited: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
 })
 
 const collectionSChema = mongoose.Schema({
@@ -35,7 +38,7 @@ const collectionSChema = mongoose.Schema({
     schoolChoices: {
 
         type: [schoolSchema],
+        required: true
     },
-    mainId: mongoose.Schema.Types.ObjectId
 })
 module.exports = mongoose.model('Collection', collectionSChema);

@@ -8,11 +8,16 @@ module.exports = (app) => {
 
     app.get('/user/signup', user.findAll);
 
-    app.get('/user/:noteId', user.findOne)
+    app.post('/user/:userId', user.findOne)
 
     app.post('/collection/:userId', collection.create)
 
     app.get('/collection/:userId', collection.find)
+
+    app.delete('/collection/:userId/:collectionId', collection.deleteOne)
+
+    app.delete('/user/:userId', user.deleteOne)
+
 
 
 
