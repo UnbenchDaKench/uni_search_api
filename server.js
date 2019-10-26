@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
     res.json({"messgae": "Welcome to easy note"})
 })
 require('./app/routes/routes.js')(app);
-app.listen(3000, () => {
+app.listen((process.env.PORT || 5000), () => {
     console.log("Server is listening")
 })
 
